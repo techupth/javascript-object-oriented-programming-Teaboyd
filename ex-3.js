@@ -1,40 +1,39 @@
 //  Start coding here
-class User{
-    constructor (id,name,email){
-        this.id = id
-        this.name = name
-        this.email = email
-    }
-}
-
-class PostLine{
-    constructor(posts){
+class PostList{
+    constructor(){
         this.posts = [];
     }
-    addPost(Post){
-        Post.push(this.posts);
+    addPost(post){
+        this.posts.push({
+            id: this.posts.length + 1,
+            title: post.title,
+            content: post.content,
+            comments: post.comments,
+
+        });
     }
-    shardPost(){
-        console.log(`You've shared about ${this.title} to your friend`);
+
+    shardPost(postId){
+        console.log(`You've shared about ${this.posts[postId - 1].title} to your friend`);
     }
 }
 
-class Post extends PostLine {
+class Post {
     constructor(id,title,content){
-        super();
-        this.id = id
-        this.title = title
-        this.content = content
-        this.comment = [];
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.comments = [];
     }
     addComment(comment){
-        comment.push(this.comment);
+        this.comments.push(comment);
     }
 }
-class Comment extends Post{
-    constructor(id,content,createdBy,like){
-        super(id,content,createdBy,like)
-        this.createdBy = createdBy
+class Comment{
+    constructor(id,content,createdBy){
+        this.id = id;
+        this.content = content;
+        this.createdBy = createdBy;
         this.like = 0;
     }
     addLike(){
@@ -42,37 +41,66 @@ class Comment extends Post{
     }
 }
 
+class User{
+    constructor(id,name,email){
+        this.id = id
+        this.name = name
+        this.email = email
+    }
+}
+
 class Facebook{
-    constructor (groupList,pageList){
+    constructor (){
         this.groupList = []
         this.pageList = []
     }
-    addGroup(){
-        ++this.groupList
+    addGroup(group){
+        this.groupList.push(group);
     }
-    addGroup(){
-        ++this.pageList
+    addPage(page){
+        this.pageList.push(page);
     }
 }
 
 class FacebookPage{
     constructor (name){
-        this.name = name
+        this.name = name;
     }
 }
 
-class FacebookGroup extends FacebookPage{
+class FacebookGroup{
     constructor(name){
-        super(name)
+        this.name = name;
     }
 }
 
-class Notification extends Comment{
+class Notification{
     constructor(id){
-        super(id);
-        delete this.name,this.email;
+        this.id = id;
     }
-    send(){
-        console.log(`Notification:${this.createdBy} has just commented on this post- ${this.title}`)
+    send(comment,post){
+        console.log(`Notification:${comment.createdBy.name} has just commented on this post- ${post.title}`)
     }
 }
+
+const Pati = new User(1,"Patiphan","Patiphan@gmail.com");
+const postList = new PostList();
+const firstPost = new Post(1,"Paboy","Patiphan love SmartHearth");
+const firstComment = new Comment(1,"Comment", Pati);
+firstComment.addLike();
+firstComment.addLike();
+console.log(firstComment.like);
+postList.addPost(firstPost);
+console.log(postList.posts);
+firstPost.addComment(firstComment);
+postList.shardPost(1);
+
+const facebook = new Facebook();
+const firstPage = new FacebookPage("My First page");
+const firstGroup = new FacebookGroup("My first group");
+facebook.addPage(firstPage);
+facebook.addGroup(firstGroup);
+console.log(facebook.pageList);
+console.log(facebook.groupList);
+const notification = new Notification(1);
+notification.send(firstComment,firstPost);

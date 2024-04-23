@@ -22,7 +22,7 @@ class SMSNotification extends Notification {
         super(notificationId,createTime,content,receiver)
     }
  }
- const Email = new EmailNotification("Gmail","20:00","Hello, World","Patiphan@gmail.com");
- const Phone = new SMSNotification("Message","21:30","Hello, Patiphan","0654321321");
+ const Email = new EmailNotification(1,"20:00","Hello, World","Patiphan@gmail.com");
+ const Phone = new SMSNotification(2,"21:30","Hello, Patiphan","0654321321");
  Email.send();
  Phone.send();
