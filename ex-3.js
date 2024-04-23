@@ -103,4 +103,4 @@ facebook.addGroup(firstGroup);
 console.log(facebook.pageList);
 console.log(facebook.groupList);
 const notification = new Notification(1);
-notification.send(firstComment,firstPost);
+notification.send(firstComment,firstPost)
